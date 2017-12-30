@@ -1,47 +1,53 @@
 package iterator
 
+// Aggregate is a collection interface
 type Aggregate interface {
 	Iterator() Iterator
 }
 
+// Iterator is an iterator interface
 type Iterator interface {
 	HasNext() bool
 	Next() interface{}
 }
 
+// BookShelf implements Aggregate
 type BookShelf struct {
 	Books []*Book
 }
 
-func (self *BookShelf) Add(book *Book) {
-	self.Books = append(self.Books, book)
+// Add adds a book to the bookshelf
+func (bs *BookShelf) Add(book *Book) {
+	bs.Books = append(bs.Books, book)
 }
 
-// *Iterator is pointer to interface, not interface
-// - Iteratorのポインタはインターフェースでないのでポインタではなくインターフェースとして戻り値を定義する
-// - ポインタをレシーバーとしてインターフェースメソッドを実装しているのでIteratorの具象はポインタとして返さなければ実装したとみなされない
-func (self *BookShelf) Iterator() Iterator {
-	return &BookShelfIterator{BookShelf: self}
+// Iterator returns an Iterator instance
+func (bs *BookShelf) Iterator() Iterator {
+	return &BookShelfIterator{BookShelf: bs}
 }
 
+// BookShelfIterator implements Iterator
 type BookShelfIterator struct {
 	BookShelf *BookShelf
 	last      int
 }
 
-func (self *BookShelfIterator) HasNext() bool {
-	if self.last >= len(self.BookShelf.Books) {
+// HasNext tells if the iterator can return an item
+func (bsi *BookShelfIterator) HasNext() bool {
+	if bsi.last >= len(bsi.BookShelf.Books) {
 		return false
 	}
 	return true
 }
 
-func (self *BookShelfIterator) Next() interface{} {
-	book := self.BookShelf.Books[self.last]
-	self.last++
+// Next returns the current item, and advances the iterator
+func (bsi *BookShelfIterator) Next() interface{} {
+	book := bsi.BookShelf.Books[bsi.last]
+	bsi.last++
 	return book
 }
 
+// Book represents a struct stored in the BookShelf
 type Book struct {
 	name string
 }

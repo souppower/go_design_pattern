@@ -14,8 +14,8 @@ func TestIterator(t *testing.T) {
 	}
 
 	i := 0
-	for iterator := bookShelf.Iterator(); iterator.HasNext(); {
-		if book := iterator.Next(); book.(*Book).name != asserts[i] {
+	for bsi := bookShelf.Iterator(); bsi.HasNext(); {
+		if book := bsi.Next(); book.(*Book).name != asserts[i] {
 			t.Errorf("Expect Book.name to %s, but %s", asserts[i], book.(*Book).name)
 		}
 		i++
