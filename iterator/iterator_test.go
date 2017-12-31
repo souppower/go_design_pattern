@@ -13,10 +13,11 @@ func TestIterator(t *testing.T) {
 		bookShelf.Add(&Book{assert})
 	}
 
-	i := 0
-	for bsi := bookShelf.Iterator(); bsi.HasNext(); {
+	var i int
+	bsi := bookShelf.Iterator()
+	for bsi.HasNext() {
 		if book := bsi.Next(); book.(*Book).name != asserts[i] {
-			t.Errorf("Expect Book.name to %s, but %s", asserts[i], book.(*Book).name)
+			t.Errorf("Expected Book.name to be %s, but got %s", asserts[i], book.(*Book).name)
 		}
 		i++
 	}
