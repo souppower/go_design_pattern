@@ -7,33 +7,36 @@ type builder interface {
 	close() string
 }
 
+// Director contains a builder instance
 type Director struct {
 	builder builder
 }
 
-func (self *Director) Construct() string {
-	result := self.builder.makeTitle("Title")
-	result += self.builder.makeString("String")
-	result += self.builder.makeItems([]string{
+// Construct does all the heavy lifting
+func (d *Director) Construct() string {
+	result := d.builder.makeTitle("Title")
+	result += d.builder.makeString("String")
+	result += d.builder.makeItems([]string{
 		"Item1",
 		"Item2",
 	})
-	result += self.builder.close()
+	result += d.builder.close()
 	return result
 }
 
+// TextBuilder implemets the builder interface
 type TextBuilder struct {
 }
 
-func (self *TextBuilder) makeTitle(title string) string {
+func (tb *TextBuilder) makeTitle(title string) string {
 	return "# " + title + "\n"
 }
 
-func (self *TextBuilder) makeString(str string) string {
+func (tb *TextBuilder) makeString(str string) string {
 	return "## " + str + "\n"
 }
 
-func (self *TextBuilder) makeItems(items []string) string {
+func (tb *TextBuilder) makeItems(items []string) string {
 	var result string
 	for _, item := range items {
 		result += "- " + item + "\n"
@@ -41,6 +44,6 @@ func (self *TextBuilder) makeItems(items []string) string {
 	return result
 }
 
-func (self *TextBuilder) close() string {
+func (tb *TextBuilder) close() string {
 	return "\n"
 }

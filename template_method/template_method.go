@@ -1,4 +1,4 @@
-package template_method
+package templateMethod
 
 type printer interface {
 	open() string
@@ -6,6 +6,7 @@ type printer interface {
 	close() string
 }
 
+// AbstractDisplay struct
 type AbstractDisplay struct {
 }
 
@@ -24,7 +25,8 @@ type AbstractDisplay struct {
 // 構造体をレシーバとするメソッドの引数に同じ構造体を渡すパターン（client-specified self pattern）を使う
 // これにより親構造体のメソッド内で子構造体の実装を呼ぶことができる
 
-func (self *AbstractDisplay) Display(printer printer) string {
+// Display displays stuff
+func (ad *AbstractDisplay) Display(printer printer) string {
 	result := printer.open()
 	for i := 0; i < 5; i++ {
 		result += printer.print()
@@ -33,39 +35,41 @@ func (self *AbstractDisplay) Display(printer printer) string {
 	return result
 }
 
+// CharDisplay is a struct
 type CharDisplay struct {
 	*AbstractDisplay
 	Char rune
 }
 
-func (self *CharDisplay) open() string {
+func (cd *CharDisplay) open() string {
 	return "<<"
 }
-func (self *CharDisplay) print() string {
-	return string(self.Char)
+func (cd *CharDisplay) print() string {
+	return string(cd.Char)
 }
-func (self *CharDisplay) close() string {
+func (cd *CharDisplay) close() string {
 	return ">>"
 }
 
+// StringDisplay is a struct
 type StringDisplay struct {
 	*AbstractDisplay
 	Str string
 }
 
-func (self *StringDisplay) open() string {
-	return self.printLine()
+func (sd *StringDisplay) open() string {
+	return sd.printLine()
 }
-func (self *StringDisplay) print() string {
-	return "| " + self.Str + " |\n"
+func (sd *StringDisplay) print() string {
+	return "| " + sd.Str + " |\n"
 }
-func (self *StringDisplay) close() string {
-	return self.printLine()
+func (sd *StringDisplay) close() string {
+	return sd.printLine()
 }
 
-func (self *StringDisplay) printLine() string {
+func (sd *StringDisplay) printLine() string {
 	line := "+-"
-	for _, _ = range self.Str {
+	for _ = range sd.Str {
 		line += "-"
 	}
 	line += "-+\n"
