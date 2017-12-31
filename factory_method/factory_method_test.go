@@ -1,4 +1,4 @@
-package factory_method
+package factoryMethod
 
 import (
 	"testing"
@@ -8,16 +8,16 @@ func TestFactoryMethod(t *testing.T) {
 
 	assert := []string{"A", "B", "C"}
 
-	factory := &IDCardFactory{}
+	f := &IDCardFactory{}
 	products := []User{
-		factory.Create(factory, "A"),
-		factory.Create(factory, "B"),
-		factory.Create(factory, "C"),
+		f.Create(f, "A"),
+		f.Create(f, "B"),
+		f.Create(f, "C"),
 	}
 
 	for i, product := range products {
 		if owner := product.Use(); owner != assert[i] {
-			t.Errorf("Expect owner to %s, but %s.\n", assert[i], owner)
+			t.Errorf("Expected owner to be %s, but got %s.\n", assert[i], owner)
 		}
 	}
 

@@ -1,14 +1,16 @@
-package factory_method
+package factoryMethod
 
 type creater interface {
 	createProduct(owner string) User
 	registerProduct(User)
 }
 
+// User interface
 type User interface {
 	Use() string
 }
 
+// Factory struct
 type Factory struct {
 }
 
@@ -23,38 +25,35 @@ type Factory struct {
 //   self.product = factoryMethod()
 //   return self.product
 // }
-func (self *Factory) Create(factory creater, owner string) User {
+
+// Create returns a User instance
+func (f *Factory) Create(factory creater, owner string) User {
 	user := factory.createProduct(owner)
 	factory.registerProduct(user)
 	return user
 }
 
-// 本来であれば基底クラスによるポリモフィズムを用いるが、Goの埋込による
-// 構造体では機能しない。この例では親構造体に共通処理がないため、インターフェースの
-// 実装によるポリモフィズムを実現する。
-// よって基底クラスを定義する必要はない。
-//
-// type Product struct {
-// }
-
+// IDCard struct
 type IDCard struct {
 	owner string
 }
 
-func (self *IDCard) Use() string {
-	return self.owner
+// Use returns the IDCard's owner
+func (ic *IDCard) Use() string {
+	return ic.owner
 }
 
+// IDCardFactory is a concrete implementation of Factory
 type IDCardFactory struct {
 	*Factory
-	owners []*string
+	owners []string
 }
 
-func (self *IDCardFactory) createProduct(owner string) User {
+func (icf *IDCardFactory) createProduct(owner string) User {
 	return &IDCard{owner}
 }
 
-func (self *IDCardFactory) registerProduct(product User) {
+func (icf *IDCardFactory) registerProduct(product User) {
 	owner := product.Use()
-	self.owners = append(self.owners, &owner)
+	icf.owners = append(icf.owners, owner)
 }
