@@ -1,15 +1,16 @@
 package adapter
 
+// ComposiotionDecorateBanner holds a banner struct as a field
 type ComposiotionDecorateBanner struct {
-	// 埋込ではなく構造体のフィールドとしてadapteeを保持
 	banner *Banner
 }
 
+// NewCompositionDecorateBanner returns a ComposiotionDecorateBanner instance
 func NewCompositionDecorateBanner(str string) *ComposiotionDecorateBanner {
 	return &ComposiotionDecorateBanner{&Banner{str}}
 }
 
-// インターフェースの実装と移譲によるアダプタ
-func (self *ComposiotionDecorateBanner) Decorate() string {
-	return self.banner.getString()
+// Decorate is an adapter method
+func (cdb *ComposiotionDecorateBanner) Decorate() string {
+	return cdb.banner.getString()
 }
