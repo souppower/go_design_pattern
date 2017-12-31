@@ -28,13 +28,13 @@ func (bs *BookShelf) Iterator() Iterator {
 
 // BookShelfIterator implements Iterator
 type BookShelfIterator struct {
-	BookShelf *BookShelf
-	last      int
+	*BookShelf
+	last int
 }
 
 // HasNext tells if the iterator can return an item
 func (bsi *BookShelfIterator) HasNext() bool {
-	if bsi.last >= len(bsi.BookShelf.Books) {
+	if bsi.last >= len(bsi.Books) {
 		return false
 	}
 	return true
@@ -42,7 +42,7 @@ func (bsi *BookShelfIterator) HasNext() bool {
 
 // Next returns the current item, and advances the iterator
 func (bsi *BookShelfIterator) Next() interface{} {
-	book := bsi.BookShelf.Books[bsi.last]
+	book := bsi.Books[bsi.last]
 	bsi.last++
 	return book
 }
