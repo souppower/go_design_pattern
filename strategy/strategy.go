@@ -5,18 +5,18 @@ import (
 )
 
 const (
-	GUU = iota
-	CHO
-	PAA
+	ROCK = iota
+	SCISSOR
+	PAPER
 )
 
 var hands []*hand
 
 func init() {
 	hands = []*hand{
-		&hand{GUU},
-		&hand{CHO},
-		&hand{PAA},
+		&hand{ROCK},
+		&hand{SCISSOR},
+		&hand{PAPER},
 	}
 }
 
