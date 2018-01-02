@@ -28,18 +28,18 @@ func getHand(handValue int) *hand {
 	return hands[handValue]
 }
 
-func (self *hand) IsStrongerThan(h *hand) bool {
-	return self.fight(h) == 1
+func (sh *hand) IsStrongerThan(h *hand) bool {
+	return sh.fight(h) == 1
 }
 
-func (self *hand) IsWeakerThan(h *hand) bool {
-	return self.fight(h) == -1
+func (sh *hand) IsWeakerThan(h *hand) bool {
+	return sh.fight(h) == -1
 }
 
-func (self *hand) fight(h *hand) int {
-	if self == h {
+func (sh *hand) fight(h *hand) int {
+	if sh == h {
 		return 0
-	} else if (self.handValue+1)%3 == h.handValue {
+	} else if (sh.handValue+1)%3 == h.handValue {
 		return 1
 	} else {
 		return -1
@@ -60,16 +60,16 @@ type winningStrategy struct {
 	prevHand *hand
 }
 
-func (self *winningStrategy) NextHand() *hand {
-	if !self.won {
-		// rand.Seed(self.seed)
-		self.prevHand = getHand(rand.Intn(3))
+func (ws *winningStrategy) NextHand() *hand {
+	if !ws.won {
+		// rand.Seed(ws.seed)
+		ws.prevHand = getHand(rand.Intn(3))
 	}
-	return self.prevHand
+	return ws.prevHand
 }
 
-func (self *winningStrategy) study(win bool) {
-	self.won = win
+func (ws *winningStrategy) study(win bool) {
+	ws.won = win
 }
 
 type Player struct {
@@ -78,20 +78,20 @@ type Player struct {
 	wincount, losecount, gamecount int
 }
 
-func (self *Player) NextHand() *hand {
-	return self.Strategy.NextHand()
+func (p *Player) NextHand() *hand {
+	return p.Strategy.NextHand()
 }
 
-func (self *Player) Win() {
-	self.wincount++
-	self.gamecount++
+func (p *Player) Win() {
+	p.wincount++
+	p.gamecount++
 }
 
-func (self *Player) Lose() {
-	self.losecount++
-	self.gamecount++
+func (p *Player) Lose() {
+	p.losecount++
+	p.gamecount++
 }
 
-func (self *Player) Even() {
-	self.gamecount++
+func (p *Player) Even() {
+	p.gamecount++
 }
