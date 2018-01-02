@@ -10,21 +10,21 @@ type StringDisplayImpl struct {
 	str string
 }
 
-func (self *StringDisplayImpl) rawOpen() string {
-	return self.printLine()
+func (sdi *StringDisplayImpl) rawOpen() string {
+	return sdi.printLine()
 }
 
-func (self *StringDisplayImpl) rawPrint() string {
-	return "|" + self.str + "|\n"
+func (sdi *StringDisplayImpl) rawPrint() string {
+	return "|" + sdi.str + "|\n"
 }
 
-func (self *StringDisplayImpl) rawClose() string {
-	return self.printLine()
+func (sdi *StringDisplayImpl) rawClose() string {
+	return sdi.printLine()
 }
 
-func (self *StringDisplayImpl) printLine() string {
+func (sdi *StringDisplayImpl) printLine() string {
 	str := "+"
-	for _, _ = range self.str {
+	for _, _ = range sdi.str {
 		str += string("-")
 	}
 	str += "+\n"
@@ -35,33 +35,33 @@ type DefaultDisplay struct {
 	impl DisplayImpl
 }
 
-func (self *DefaultDisplay) open() string {
-	return self.impl.rawOpen()
+func (dd *DefaultDisplay) open() string {
+	return dd.impl.rawOpen()
 }
 
-func (self *DefaultDisplay) print() string {
-	return self.impl.rawPrint()
+func (dd *DefaultDisplay) print() string {
+	return dd.impl.rawPrint()
 }
 
-func (self *DefaultDisplay) close() string {
-	return self.impl.rawClose()
+func (dd *DefaultDisplay) close() string {
+	return dd.impl.rawClose()
 }
 
-func (self *DefaultDisplay) Display() string {
-	return self.open() +
-		self.print() +
-		self.close()
+func (dd *DefaultDisplay) Display() string {
+	return dd.open() +
+		dd.print() +
+		dd.close()
 }
 
 type CountDisplay struct {
 	*DefaultDisplay
 }
 
-func (self *CountDisplay) MultiDisplay(num int) string {
-	str := self.open()
+func (cd *CountDisplay) MultiDisplay(num int) string {
+	str := cd.open()
 	for i := 0; i < num; i++ {
-		str += self.print()
+		str += cd.print()
 	}
-	str += self.close()
+	str += cd.close()
 	return str
 }
