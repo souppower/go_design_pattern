@@ -1,4 +1,4 @@
-package abstract_factory
+package abstractFactory
 
 // 継承ではなくインターフェースによるポリモフィズムを用いる
 type item interface {
@@ -22,8 +22,8 @@ type baseTray struct {
 	tray []item
 }
 
-func (self *baseTray) AddToTray(item item) {
-	self.tray = append(self.tray, item)
+func (bt *baseTray) AddToTray(item item) {
+	bt.tray = append(bt.tray, item)
 }
 
 type page interface {
@@ -35,8 +35,8 @@ type basePage struct {
 	content []item
 }
 
-func (self *basePage) AddToContent(item item) {
-	self.content = append(self.content, item)
+func (bp *basePage) AddToContent(item item) {
+	bp.content = append(bp.content, item)
 }
 
 type factory interface {
@@ -49,8 +49,8 @@ type mdLink struct {
 	caption, url string
 }
 
-func (self *mdLink) toString() string {
-	return "[" + self.caption + "](" + self.url + ")"
+func (ml *mdLink) toString() string {
+	return "[" + ml.caption + "](" + ml.url + ")"
 }
 
 type mdTray struct {
@@ -60,9 +60,9 @@ type mdTray struct {
 	caption string
 }
 
-func (self *mdTray) toString() string {
-	tray := "- " + self.caption + "\n"
-	for _, item := range self.tray {
+func (mt *mdTray) toString() string {
+	tray := "- " + mt.caption + "\n"
+	for _, item := range mt.tray {
 		tray += item.toString() + "\n"
 	}
 	return tray
@@ -73,10 +73,10 @@ type mdPage struct {
 	title, author string
 }
 
-func (self *mdPage) Output() string {
-	content := "title: " + self.title + "\n"
-	content += "author: " + self.author + "\n"
-	for _, item := range self.content {
+func (mp *mdPage) Output() string {
+	content := "title: " + mp.title + "\n"
+	content += "author: " + mp.author + "\n"
+	for _, item := range mp.content {
 		content += item.toString() + "\n"
 	}
 	return content
@@ -85,12 +85,12 @@ func (self *mdPage) Output() string {
 type MdFactory struct {
 }
 
-func (self *MdFactory) CreateLink(caption, url string) link {
+func (mf *MdFactory) CreateLink(caption, url string) link {
 	return &mdLink{caption, url}
 }
-func (self *MdFactory) CreateTray(caption string) tray {
+func (mf *MdFactory) CreateTray(caption string) tray {
 	return &mdTray{caption: caption}
 }
-func (self *MdFactory) CreatePage(title, author string) page {
+func (mf *MdFactory) CreatePage(title, author string) page {
 	return &mdPage{title: title, author: author}
 }
