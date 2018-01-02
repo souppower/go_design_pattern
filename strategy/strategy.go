@@ -55,14 +55,12 @@ type strategy interface {
 }
 
 type winningStrategy struct {
-	seed     int64
 	won      bool
 	prevHand *hand
 }
 
 func (ws *winningStrategy) NextHand() *hand {
 	if !ws.won {
-		// rand.Seed(ws.seed)
 		ws.prevHand = getHand(rand.Intn(3))
 	}
 	return ws.prevHand

@@ -5,8 +5,8 @@ import (
 )
 
 func TestStrategy(t *testing.T) {
-	p1 := Player{Name: "A", Strategy: &winningStrategy{seed: 10}}
-	p2 := Player{Name: "B", Strategy: &winningStrategy{seed: 20}}
+	p1 := Player{Name: "A", Strategy: &winningStrategy{}}
+	p2 := Player{Name: "B", Strategy: &winningStrategy{}}
 
 	p1h := p1.NextHand()
 	p2h := p2.NextHand()
