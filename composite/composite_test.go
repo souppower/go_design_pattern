@@ -20,7 +20,7 @@ func TestComposite(t *testing.T) {
 
 	expect := "/root (3)\n/root/usr (2)\n/root/usr/B (2)\n/root/A (1)\n"
 	if result != expect {
-		t.Errorf("Expect result to equal %s, but %s.\n", expect, result)
+		t.Errorf("Expected result to equal %s, but got %s.\n", expect, result)
 	}
 
 }

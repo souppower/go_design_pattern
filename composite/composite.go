@@ -16,11 +16,11 @@ type defaultEntry struct {
 	name string
 }
 
-func (self *defaultEntry) getName() string {
-	return self.name
+func (de *defaultEntry) getName() string {
+	return de.name
 }
 
-func (self *defaultEntry) print(entry entry) string {
+func (de *defaultEntry) print(entry entry) string {
 	return entry.getName() + " (" + strconv.Itoa(entry.getSize()) + ")\n"
 }
 
@@ -29,48 +29,50 @@ type file struct {
 	size int
 }
 
-func (self *file) getSize() int {
-	return self.size
+func (f *file) getSize() int {
+	return f.size
 }
 
-func (self *file) PrintList(prefix string) string {
-	return prefix + "/" + self.print(self)
+func (f *file) PrintList(prefix string) string {
+	return prefix + "/" + f.print(f)
 }
 
-func (self *file) Add(entry entry) {}
+func (f *file) Add(entry entry) {}
 
 type directory struct {
 	*defaultEntry
 	dir []entry
 }
 
-func (self *directory) getSize() int {
+func (d *directory) getSize() int {
 	size := 0
-	for _, dir := range self.dir {
+	for _, dir := range d.dir {
 		size += dir.getSize()
 	}
 	return size
 }
 
-func (self *directory) Add(entry entry) {
-	self.dir = append(self.dir, entry)
+func (d *directory) Add(entry entry) {
+	d.dir = append(d.dir, entry)
 }
 
-func (self *directory) PrintList(prefix string) string {
-	list := prefix + "/" + self.print(self)
-	for _, dir := range self.dir {
-		list += dir.PrintList(prefix + "/" + self.getName())
+func (d *directory) PrintList(prefix string) string {
+	list := prefix + "/" + d.print(d)
+	for _, dir := range d.dir {
+		list += dir.PrintList(prefix + "/" + d.getName())
 	}
 	return list
 }
 
-// 利用側に埋込構造体を意識させないためのインスタンス生成関数。
+// NewFile returns a file instance
 func NewFile(name string, size int) *file {
 	return &file{
-		defaultEntry: &defaultEntry{name: name}, // 埋込時のキーには構造体と同名のものを使うことができる
+		defaultEntry: &defaultEntry{name: name},
 		size:         size,
 	}
 }
+
+// NewDirectory returns a directory instance
 func NewDirectory(name string) *directory {
 	return &directory{defaultEntry: &defaultEntry{name: name}}
 }
