@@ -8,13 +8,13 @@ type numberGenerator struct {
 	observers []observer
 }
 
-func (self *numberGenerator) AddObserver(observer observer) {
-	self.observers = append(self.observers, observer)
+func (ng *numberGenerator) AddObserver(observer observer) {
+	ng.observers = append(ng.observers, observer)
 }
 
-func (self *numberGenerator) notifyObservers() []int {
+func (ng *numberGenerator) notifyObservers() []int {
 	var result []int
-	for _, observer := range self.observers {
+	for _, observer := range ng.observers {
 		result = append(result, observer.update())
 	}
 	return result
@@ -32,12 +32,12 @@ type number interface {
 	getNumber() int
 }
 
-func (self *randomNumberGenerator) getNumber() int {
+func (ng *randomNumberGenerator) getNumber() int {
 	return rand.Intn(50)
 }
 
-func (self *randomNumberGenerator) Execute() []int {
-	return self.notifyObservers()
+func (ng *randomNumberGenerator) Execute() []int {
+	return ng.notifyObservers()
 }
 
 type observer interface {
@@ -48,6 +48,6 @@ type DigitObserver struct {
 	generator number
 }
 
-func (self *DigitObserver) update() int {
-	return self.generator.getNumber()
+func (do *DigitObserver) update() int {
+	return do.generator.getNumber()
 }

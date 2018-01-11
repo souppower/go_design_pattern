@@ -18,7 +18,7 @@ func TestObserver(t *testing.T) {
 
 	for _, r := range result {
 		if len(result) != 2 && r >= 50 {
-			t.Errorf("Expect result to equal random int array")
+			t.Errorf("Expected result to be a random int array")
 		}
 	}
 }
