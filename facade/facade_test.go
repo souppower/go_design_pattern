@@ -10,6 +10,6 @@ func TestFacade(t *testing.T) {
 	expect := "# Welcome to a's page!"
 
 	if result != expect {
-		t.Errorf("Expect result to equal %s, but %s.", expect, result)
+		t.Errorf("Expected result to equal %s, but got %s.", expect, result)
 	}
 }

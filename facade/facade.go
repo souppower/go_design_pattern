@@ -8,21 +8,23 @@ var db = map[string]string{
 type database struct {
 }
 
-func (self *database) getNameByMail(mail string) string {
+func (d *database) getNameByMail(mail string) string {
 	return db[mail]
 }
 
 type mdWriter struct {
 }
 
-func (self *mdWriter) title(title string) string {
+func (mw *mdWriter) title(title string) string {
 	return "# Welcome to " + title + "'s page!"
 }
 
+// PageMaker struct
 type PageMaker struct {
 }
 
-func (self *PageMaker) MakeWelcomePage(mail string) string {
+// MakeWelcomePage returns page content
+func (pm *PageMaker) MakeWelcomePage(mail string) string {
 	database := database{}
 	writer := mdWriter{}
 
