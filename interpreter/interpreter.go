@@ -13,35 +13,35 @@ type ProgramNode struct {
 	commandListNode node
 }
 
-func (self *ProgramNode) Parse(context *context) {
+func (pn *ProgramNode) Parse(context *context) {
 	context.skipToken("program")
-	self.commandListNode = &commandListNode{}
-	self.commandListNode.Parse(context)
+	pn.commandListNode = &commandListNode{}
+	pn.commandListNode.Parse(context)
 }
 
-func (self *ProgramNode) ToString() string {
-	return "program: " + self.commandListNode.ToString()
+func (pn *ProgramNode) ToString() string {
+	return "program: " + pn.commandListNode.ToString()
 }
 
 type commandListNode struct {
 	list []node
 }
 
-func (self *commandListNode) Parse(context *context) {
+func (cln *commandListNode) Parse(context *context) {
 	for {
 		if context.currentToken == "end" {
 			break
 		} else {
 			commandNode := &commandNode{}
 			commandNode.Parse(context)
-			self.list = append(self.list, commandNode)
+			cln.list = append(cln.list, commandNode)
 		}
 	}
 }
 
-func (self *commandListNode) ToString() string {
+func (cln *commandListNode) ToString() string {
 	var str string
-	for _, l := range self.list {
+	for _, l := range cln.list {
 		str += l.ToString()
 	}
 	return str
@@ -51,26 +51,26 @@ type commandNode struct {
 	node node
 }
 
-func (self *commandNode) Parse(context *context) {
-	self.node = &primitiveCommandNode{}
-	self.node.Parse(context)
+func (cn *commandNode) Parse(context *context) {
+	cn.node = &primitiveCommandNode{}
+	cn.node.Parse(context)
 }
 
-func (self *commandNode) ToString() string {
-	return self.node.ToString()
+func (cn *commandNode) ToString() string {
+	return cn.node.ToString()
 }
 
 type primitiveCommandNode struct {
 	name string
 }
 
-func (self *primitiveCommandNode) Parse(context *context) {
-	self.name = context.currentToken
-	context.skipToken(self.name)
+func (pcn *primitiveCommandNode) Parse(context *context) {
+	pcn.name = context.currentToken
+	context.skipToken(pcn.name)
 }
 
-func (self *primitiveCommandNode) ToString() string {
-	return self.name + " "
+func (pcn *primitiveCommandNode) ToString() string {
+	return pcn.name + " "
 }
 
 type context struct {
@@ -88,16 +88,16 @@ func NewContext(text string) *context {
 	return context
 }
 
-func (self *context) nextToken() string {
-	if len(self.tokens) == 0 {
-		self.currentToken = ""
+func (c *context) nextToken() string {
+	if len(c.tokens) == 0 {
+		c.currentToken = ""
 	} else {
-		self.currentToken = self.tokens[0]
-		self.tokens = self.tokens[1:]
+		c.currentToken = c.tokens[0]
+		c.tokens = c.tokens[1:]
 	}
-	return self.currentToken
+	return c.currentToken
 }
 
-func (self *context) skipToken(token string) {
-	self.nextToken()
+func (c *context) skipToken(token string) {
+	c.nextToken()
 }

@@ -14,7 +14,7 @@ func TestInterpreter(t *testing.T) {
 
 	expect := "program: go right "
 	if node.ToString() != expect {
-		t.Errorf("Expect result to equal %s, but %s.\n", expect, node.ToString())
+		t.Errorf("Expected result to equal %s, but got %s.\n", expect, node.ToString())
 	}
 
 }
