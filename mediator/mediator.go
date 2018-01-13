@@ -15,12 +15,12 @@ type button struct {
 	mediator mediator
 }
 
-func (self *button) setMediator(mediator mediator) {
-	self.mediator = mediator
+func (b *button) setMediator(mediator mediator) {
+	b.mediator = mediator
 }
 
-func (self *button) setColleagueEnabled(enabled bool) {
-	self.Enabled = enabled
+func (b *button) setColleagueEnabled(enabled bool) {
+	b.Enabled = enabled
 }
 
 type radioButton struct {
@@ -29,17 +29,17 @@ type radioButton struct {
 	mediator mediator
 }
 
-func (self *radioButton) setMediator(mediator mediator) {
-	self.mediator = mediator
+func (rb *radioButton) setMediator(mediator mediator) {
+	rb.mediator = mediator
 }
 
-func (self *radioButton) setColleagueEnabled(enabled bool) {
-	self.enabled = enabled
+func (rb *radioButton) setColleagueEnabled(enabled bool) {
+	rb.enabled = enabled
 }
 
-func (self *radioButton) Check(checked bool) {
-	self.checked = checked
-	self.mediator.colleagueChanged()
+func (rb *radioButton) Check(checked bool) {
+	rb.checked = checked
+	rb.mediator.colleagueChanged()
 }
 
 type loginForm struct {
@@ -47,23 +47,24 @@ type loginForm struct {
 	Button      button
 }
 
+// NewLoginForm returns a loginForm instance
 func NewLoginForm() *loginForm {
-	loginForm := &loginForm{}
-	loginForm.createColleagues()
-	return loginForm
+	lf := &loginForm{}
+	lf.createColleagues()
+	return lf
 }
 
-func (self *loginForm) createColleagues() {
-	self.RadioButton = radioButton{}
-	self.Button = button{}
-	self.RadioButton.setMediator(self)
-	self.Button.setMediator(self)
+func (lf *loginForm) createColleagues() {
+	lf.RadioButton = radioButton{}
+	lf.Button = button{}
+	lf.RadioButton.setMediator(lf)
+	lf.Button.setMediator(lf)
 }
 
-func (self *loginForm) colleagueChanged() {
-	if !self.RadioButton.checked {
-		self.Button.setColleagueEnabled(false)
+func (lf *loginForm) colleagueChanged() {
+	if !lf.RadioButton.checked {
+		lf.Button.setColleagueEnabled(false)
 	} else {
-		self.Button.setColleagueEnabled(true)
+		lf.Button.setColleagueEnabled(true)
 	}
 }

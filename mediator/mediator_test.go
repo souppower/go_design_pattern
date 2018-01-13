@@ -9,14 +9,14 @@ func TestMediator(t *testing.T) {
 
 	state := loginForm.Button.Enabled
 	if state {
-		t.Errorf("Expect state to false, but true.\n")
+		t.Errorf("Expected state to be false, but got true.\n")
 	}
 
 	loginForm.RadioButton.Check(true)
 
 	state = loginForm.Button.Enabled
 	if !state {
-		t.Errorf("Expect state to true, but false.\n")
+		t.Errorf("Expect state to be true, but got false.\n")
 	}
 
 }
