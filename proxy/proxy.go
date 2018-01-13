@@ -10,16 +10,16 @@ type printer struct {
 	name string
 }
 
-func (self *printer) SetPrinterName(name string) {
-	self.name = name
+func (p *printer) SetPrinterName(name string) {
+	p.name = name
 }
 
-func (self *printer) GetPrinterName() string {
-	return self.name
+func (p *printer) GetPrinterName() string {
+	return p.name
 }
 
-func (self *printer) Print(str string) string {
-	return self.name + ":" + str
+func (p *printer) Print(str string) string {
+	return p.name + ":" + str
 }
 
 type PrinterProxy struct {
@@ -27,24 +27,24 @@ type PrinterProxy struct {
 	real *printer
 }
 
-func (self *PrinterProxy) SetPrinterName(name string) {
-	if self.real != nil {
-		self.real.SetPrinterName(name)
+func (pp *PrinterProxy) SetPrinterName(name string) {
+	if pp.real != nil {
+		pp.real.SetPrinterName(name)
 	}
-	self.Name = name
+	pp.Name = name
 }
 
-func (self *PrinterProxy) GetPrinterName() string {
-	return self.Name
+func (pp *PrinterProxy) GetPrinterName() string {
+	return pp.Name
 }
 
-func (self *PrinterProxy) Print(str string) string {
-	self.realize()
-	return self.real.Print(str)
+func (pp *PrinterProxy) Print(str string) string {
+	pp.realize()
+	return pp.real.Print(str)
 }
 
-func (self *PrinterProxy) realize() {
-	if self.real == nil {
-		self.real = &printer{self.Name}
+func (pp *PrinterProxy) realize() {
+	if pp.real == nil {
+		pp.real = &printer{pp.Name}
 	}
 }

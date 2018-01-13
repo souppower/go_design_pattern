@@ -9,18 +9,18 @@ func TestProxy(t *testing.T) {
 	name := proxy.GetPrinterName()
 
 	if name != "A" {
-		t.Errorf("Expect name to equal %s, but %s.\n", "A", name)
+		t.Errorf("Expected name to equal %s, but got %s.\n", "A", name)
 	}
 
 	proxy.SetPrinterName("B")
 	name = proxy.GetPrinterName()
 	if name != "B" {
-		t.Errorf("Expect name to equal %s, but %s.\n", "B", name)
+		t.Errorf("Expected name to equal %s, but got %s.\n", "B", name)
 	}
 
 	result := proxy.Print("C")
 	if result != "B:C" {
-		t.Errorf("Expect result to equal %s, but %s.\n", "B:C", result)
+		t.Errorf("Expected result to equal %s, but got %s.\n", "B:C", result)
 	}
 
 }
