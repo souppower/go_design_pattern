@@ -11,8 +11,8 @@ type defaultDisplay struct {
 	display
 }
 
-func (self *defaultDisplay) Show(display display) string {
-	str := ""
+func (dd *defaultDisplay) Show(display display) string {
+	var str string
 	for i := 0; i < display.getRows(); i++ {
 		str += display.getRowText(i)
 	}
@@ -24,6 +24,7 @@ type StringDisplay struct {
 	str string
 }
 
+// NewStringDisplay returns a new StringDisplay instance
 func NewStringDisplay(str string) *StringDisplay {
 	return &StringDisplay{
 		&defaultDisplay{},
@@ -31,20 +32,20 @@ func NewStringDisplay(str string) *StringDisplay {
 	}
 }
 
-func (self *StringDisplay) getColumns() int {
-	return len(self.str)
+func (sd *StringDisplay) getColumns() int {
+	return len(sd.str)
 }
 
-func (self *StringDisplay) getRows() int {
+func (sd *StringDisplay) getRows() int {
 	return 1
 }
 
-func (self *StringDisplay) getRowText(row int) string {
+func (sd *StringDisplay) getRowText(row int) string {
 	if row == 0 {
-		return self.str
-	} else {
-		return ""
+		return sd.str
 	}
+
+	return ""
 }
 
 type border struct {
@@ -64,14 +65,14 @@ func NewSideBorder(display display, borderChar string) *SideBorder {
 	}
 }
 
-func (self *SideBorder) getColumns() int {
-	return len(self.borderChar)*2 + self.display.getColumns()
+func (sb *SideBorder) getColumns() int {
+	return len(sb.borderChar)*2 + sb.display.getColumns()
 }
 
-func (self *SideBorder) getRows() int {
-	return self.display.getRows()
+func (sb *SideBorder) getRows() int {
+	return sb.display.getRows()
 }
 
-func (self *SideBorder) getRowText(row int) string {
-	return self.borderChar + self.display.getRowText(row) + self.borderChar
+func (sb *SideBorder) getRowText(row int) string {
+	return sb.borderChar + sb.display.getRowText(row) + sb.borderChar
 }
